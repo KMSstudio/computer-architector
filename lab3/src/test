@@ -1,0 +1,15 @@
+#!/bin/sh
+
+bindir=../build/bin
+
+case "$1" in
+	"fold")
+		$bindir/"sim_fold"
+		;;
+	"pipe")
+		$bindir/"sim_pipe"
+		;;
+	*)
+		echo "usage: test [type]"
+		echo "	type - fold / pipe"
+esac
