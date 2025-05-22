@@ -1,0 +1,67 @@
+Warning: file 'memory.vmh' for memory 'mem' has a gap at addresses 13 to 65535.
+Warning: file 'memory.vmh' for memory 'mem' has a gap at addresses 13 to 65535.
+
+Cycle          0 ----------------------------------------------------
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0c, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000003, copVal: tagged Invalid  }
+
+Cycle          1 ----------------------------------------------------
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h0c, csr: tagged Invalid , data: 'h00000003, addr: 'h00000004, mispredict: False, brTaken: False }
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0d, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h0000000a, copVal: tagged Invalid  }
+
+Cycle          2 ----------------------------------------------------
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h0d, csr: tagged Invalid , data: 'h0000000a, addr: 'h00000008, mispredict: False, brTaken: False }
+Decode   : iEpoch = 0 fEpoch = 0, stall = 1DecodedInst { iType: Alu, aluFunc: Xor, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h0c, src2: tagged Valid 'h0d, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+
+Cycle          3 ----------------------------------------------------
+Decode   : iEpoch = 0 fEpoch = 0, stall = 1DecodedInst { iType: Alu, aluFunc: Xor, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h0c, src2: tagged Valid 'h0d, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+
+Cycle          4 ----------------------------------------------------
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Alu, aluFunc: Xor, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h0c, src2: tagged Valid 'h0d, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+
+Cycle          5 ----------------------------------------------------
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h10, csr: tagged Invalid , data: 'h00000009, addr: 'h0000000c, mispredict: False, brTaken: False }
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0e, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000009, copVal: tagged Invalid  }
+
+Cycle          6 ----------------------------------------------------
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h0e, csr: tagged Invalid , data: 'h00000009, addr: 'h00000010, mispredict: False, brTaken: False }
+Decode   : iEpoch = 0 fEpoch = 0, stall = 1DecodedInst { iType: Alu, aluFunc: Xor, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h10, src2: tagged Valid 'h0e, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+
+Cycle          7 ----------------------------------------------------
+Decode   : iEpoch = 0 fEpoch = 0, stall = 1DecodedInst { iType: Alu, aluFunc: Xor, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h10, src2: tagged Valid 'h0e, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+
+Cycle          8 ----------------------------------------------------
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Alu, aluFunc: Xor, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h10, src2: tagged Valid 'h0e, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+
+Cycle          9 ----------------------------------------------------
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h10, csr: tagged Invalid , data: 'h00000000, addr: 'h00000014, mispredict: False, brTaken: False }
+Decode   : iEpoch = 0 fEpoch = 0, stall = 1DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0a, src1: tagged Valid 'h10, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+
+Cycle         10 ----------------------------------------------------
+Decode   : iEpoch = 0 fEpoch = 0, stall = 1DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0a, src1: tagged Valid 'h10, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+
+Cycle         11 ----------------------------------------------------
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0a, src1: tagged Valid 'h10, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+
+Cycle         12 ----------------------------------------------------
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h0a, csr: tagged Invalid , data: 'h00000000, addr: 'h00000018, mispredict: False, brTaken: False }
+Decode   : iEpoch = 0 fEpoch = 0, stall = 1DecodedInst { iType: Csrw, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h0a, src2: tagged Invalid , csr: tagged Valid 'h780, imm: tagged Invalid , copVal: tagged Invalid  }
+
+Cycle         13 ----------------------------------------------------
+Decode   : iEpoch = 0 fEpoch = 0, stall = 1DecodedInst { iType: Csrw, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h0a, src2: tagged Invalid , csr: tagged Valid 'h780, imm: tagged Invalid , copVal: tagged Invalid  }
+
+Cycle         14 ----------------------------------------------------
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Csrw, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h0a, src2: tagged Invalid , csr: tagged Valid 'h780, imm: tagged Invalid , copVal: tagged Invalid  }
+
+Cycle         15 ----------------------------------------------------
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Csrw, dst: tagged Invalid , csr: tagged Valid 'h780, data: 'h00000000, addr: 'h0000001c, mispredict: False, brTaken: False }
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+
+Cycle         16 ----------------------------------------------------
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Invalid , csr: tagged Invalid , data: 'h00000000, addr: 'h00000020, mispredict: False, brTaken: False }
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+
+Cycle         17 ----------------------------------------------------
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Invalid , csr: tagged Invalid , data: 'h00000000, addr: 'h00000024, mispredict: False, brTaken: False }
+Decode   : iEpoch = 0 fEpoch = 0, stall = 0DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+
+Cycle         18 ----------------------------------------------------

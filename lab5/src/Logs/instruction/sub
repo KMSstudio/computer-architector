@@ -1,0 +1,65 @@
+Error: failed to open file 'mmemory.vmh' because No such file or directory
+Warning: file 'memory.vmh' for memory 'mem' has a gap at addresses 15 to 65535.
+Fetch : from Pc          0 , 
+
+
+Cycle          0 ----------------------------------------------------
+DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0d, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h0000000a }
+Fetch : from Pc          4 , 
+
+
+Cycle          1 ----------------------------------------------------
+ExecInst { iType: Alu, dst: tagged Valid 'h0d, csr: tagged Invalid , data: 'h0000000a, addr: 'h00000004, mispredict: False, brTaken: False }
+DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0e, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000005 }
+Fetch : from Pc          8 , 
+
+
+Cycle          2 ----------------------------------------------------
+ExecInst { iType: Alu, dst: tagged Valid 'h0e, csr: tagged Invalid , data: 'h00000005, addr: 'h00000008, mispredict: False, brTaken: False }
+DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0f, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000003 }
+Fetch : from Pc         12 , 
+
+
+Cycle          3 ----------------------------------------------------
+ExecInst { iType: Alu, dst: tagged Valid 'h0f, csr: tagged Invalid , data: 'h00000003, addr: 'h0000000c, mispredict: False, brTaken: False }
+DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000002 }
+Fetch : from Pc         16 , 
+
+
+Cycle          4 ----------------------------------------------------
+ExecInst { iType: Alu, dst: tagged Valid 'h10, csr: tagged Invalid , data: 'h00000002, addr: 'h00000010, mispredict: False, brTaken: False }
+DecodedInst { iType: Alu, aluFunc: Sub, brFunc: NT, dst: tagged Valid 'h11, src1: tagged Valid 'h0d, src2: tagged Valid 'h0e, csr: tagged Invalid , imm: tagged Invalid  }
+Fetch : from Pc         20 , 
+
+
+Cycle          5 ----------------------------------------------------
+ExecInst { iType: Alu, dst: tagged Valid 'h11, csr: tagged Invalid , data: 'h00000005, addr: 'h00000014, mispredict: False, brTaken: False }
+DecodedInst { iType: Alu, aluFunc: Sub, brFunc: NT, dst: tagged Valid 'h11, src1: tagged Valid 'h11, src2: tagged Valid 'h0f, csr: tagged Invalid , imm: tagged Invalid  }
+Fetch : from Pc         24 , 
+
+
+Cycle          6 ----------------------------------------------------
+ExecInst { iType: Alu, dst: tagged Valid 'h11, csr: tagged Invalid , data: 'h00000002, addr: 'h00000018, mispredict: False, brTaken: False }
+DecodedInst { iType: Alu, aluFunc: Sub, brFunc: NT, dst: tagged Valid 'h11, src1: tagged Valid 'h11, src2: tagged Valid 'h10, csr: tagged Invalid , imm: tagged Invalid  }
+Fetch : from Pc         28 , 
+
+
+Cycle          7 ----------------------------------------------------
+ExecInst { iType: Alu, dst: tagged Valid 'h11, csr: tagged Invalid , data: 'h00000000, addr: 'h0000001c, mispredict: False, brTaken: False }
+DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0a, src1: tagged Valid 'h11, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000 }
+Fetch : from Pc         32 , 
+
+
+Cycle          8 ----------------------------------------------------
+ExecInst { iType: Alu, dst: tagged Valid 'h0a, csr: tagged Invalid , data: 'h00000000, addr: 'h00000020, mispredict: False, brTaken: False }
+DecodedInst { iType: Csrw, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h0a, src2: tagged Invalid , csr: tagged Valid 'h780, imm: tagged Invalid  }
+Fetch : from Pc         36 , 
+
+
+Cycle          9 ----------------------------------------------------
+ExecInst { iType: Csrw, dst: tagged Invalid , csr: tagged Valid 'h780, data: 'h00000000, addr: 'h00000024, mispredict: False, brTaken: False }
+DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000 }
+Fetch : from Pc         40 , 
+
+
+Cycle         10 ----------------------------------------------------

@@ -1,0 +1,274 @@
+#!/bin/bash
+SRCPATH=./
+TESTHOME=../lib/programs/
+DECODEDIR=$TESTHOME/decode
+INSTDIR=$TESTHOME/instruction-test/
+HAZRDIR=$TESTHOME/hazard-test/
+PROGDIR=$TESTHOME/program-test/
+LOGDIR=./Logs/
+BUILDDIR=../build
+BDIRDIR=$BUILDDIR/bdir
+BINDIR=$BUILDDIR/bin
+LIB=../lib/
+
+function instruction_test {
+	cp $INSTDIR/$1.vmh $SRCPATH/memory.vmh
+	mkdir -p $LOGDIR/instruction
+	$BINDIR/sim > $LOGDIR/instruction/$1
+	rm memory.vmh
+}
+
+function hazard_test {
+	cp $HAZRDIR/$1.vmh $SRCPATH/memory.vmh
+	mkdir -p $LOGDIR/hazard
+	$BINDIR/sim > $LOGDIR/hazard/$1
+	rm memory.vmh
+}
+
+function program_test {
+	cp $PROGDIR/$1.vmh $SRCPATH/memory.vmh
+	mkdir -p $LOGDIR/program
+	$BINDIR/sim > $LOGDIR/program/$1
+	rm memory.vmh
+}
+
+function decode_test {
+  cp $DECODEDIR/decode.vmh $SRCPATH/memory.vmh
+  $BINDIR/sim > ./decode_result
+  rm -f memory.vmh
+}
+
+function clean {
+	rm -rf $BUILDDIR
+	rm -rf $LOGDIR
+	rm -f  decode_result
+	rm -rf ./bdir
+	rm -rf ./build
+	rm -rf ./Log
+	rm -f ./sim.so
+	rm -f ./sim
+}
+
+function compile {
+	mkdir -p $BUILDDIR
+	mkdir -p $BDIRDIR
+	mkdir -p $BINDIR
+	bsc -u -sim -aggressive-conditions -no-warn-action-shadowing -p +:$LIB/common-lib -simdir $BDIRDIR -info-dir $BDIRDIR -bdir $BDIRDIR $LIB/common-lib/TestBench.bsv
+	bsc -u -sim -e mkTestBench -bdir $BDIRDIR -info-dir $BDIRDIR -simdir $BDIRDIR -o $BINDIR/sim $BDIRDIR/*.ba
+}
+
+function decode_compile {
+  mkdir -p $BUILDDIR
+  mkdir -p $BDIRDIR
+  mkdir -p $BINDIR
+ 	bsc -u -sim -aggressive-conditions -no-warn-action-shadowing -p +:$LIB/common-lib -simdir $BDIRDIR -info-dir $BDIRDIR -bdir $BDIRDIR $LIB/common-lib/TestBenchDecode.bsv
+	bsc -u -sim -e mkTestBenchDecode -bdir $BDIRDIR -info-dir $BDIRDIR -simdir $BDIRDIR -o $BINDIR/sim $BDIRDIR/*.ba
+}
+
+function test_all {
+    echo " "
+    echo "=============== Instruction Test ==============="
+	echo " "
+
+	echo "testing add"
+	instruction_test add
+
+        echo "testing addi"
+        instruction_test addi
+
+        echo "testing and"
+        instruction_test and
+
+        echo "testing andi"
+        instruction_test andi
+
+        echo "testing auipc"
+        instruction_test auipc
+
+        echo "testing beq"
+        instruction_test beq
+
+        echo "testing bge"
+        instruction_test bge
+
+        echo "testing bgeu"
+        instruction_test bgeu
+
+        echo "testing blt"
+        instruction_test bge
+
+        echo "testing bltu"
+        instruction_test bltu
+
+        echo "testing bne"
+        instruction_test bne
+
+        echo "testing jal"
+        instruction_test jal
+
+        echo "testing jalr"
+        instruction_test jalr
+
+        echo "testing lui"
+        instruction_test lui
+
+
+        echo "testing or"
+        instruction_test or
+
+        echo "testing ori"
+        instruction_test ori
+
+#        echo "testing sll"
+#        instruction_test sll
+
+        echo "testing slli"
+        instruction_test slli
+
+#        echo "testing slt"
+#        instruction_test slt
+
+        echo "testing slti"
+        instruction_test slti
+
+        echo "testing sltiu"
+        instruction_test sltiu
+
+        echo "testing sltu"
+        instruction_test sltu
+
+        echo "testing sra"
+        instruction_test sra
+
+        echo "testing srai"
+        instruction_test srai
+
+ #       echo "testing srl"
+ #       instruction_test srl
+
+        echo "testing srli"
+        instruction_test srli
+
+        echo "testing sub"
+        instruction_test sub
+
+        echo "testing xor"
+        instruction_test xor
+
+        echo "testing xori"
+        instruction_test xori
+
+
+    echo " "
+    echo " "
+    #echo "=============== Hazard Test ==============="
+
+	#echo " "
+	#echo "testing control"
+	#hazard_test control
+
+	#echo " "
+	#echo "testing raw"
+	#hazard_test raw
+
+	#echo " "
+	#echo "testing war"
+	#hazard_test war
+
+	#echo " "
+	#echo "testing waw"
+	#hazard_test waw
+
+    #echo " "
+    #echo " "
+    echo "=============== Program Test ==============="
+
+	echo " "
+	echo "testing array_sum_1d"
+	program_test array_sum_1d
+
+	echo " "
+	echo "testing array_sum_ij"
+	program_test array_sum_ij
+
+	echo " "
+	echo "testing array_sum_ji"
+	program_test array_sum_ji
+
+
+	echo " "
+	echo "testing hanoi_tower"
+	program_test hanoi_tower
+
+	echo " "
+	echo "testing bubble_sort"
+	program_test bubble_sort
+
+    echo " "
+	echo "testing fibonacci"
+	program_test fibonacci
+
+	rm -f memory.vmh
+}
+
+case "$1" in
+	-c) clean;
+    if [ "$2" == "-d" ]; then decode_compile;
+    else compile;
+    fi;;
+	-clean) clean;;
+	-r) if [ "$2" == "-d" ]; then decode_test;
+      else test_all;
+      fi;;
+  -cd) decode_compile;;
+  -rd) decode_test;;
+  -i)
+		if [ -f $INSTDIR/$2.vmh ]; then
+            echo " "
+			echo "testing $2"
+			instruction_test $2
+			rm -f memory.vmh
+		else
+			echo "Instruction test '$2' not found."
+		fi;;
+	-z)
+		if [ -f $HAZRDIR/$2.vmh ]; then
+            echo " "
+			echo "testing $2"
+			hazard_test $2;
+			rm -f memory.vmh
+		else
+			echo "Hazard test '$2' not found."
+		fi;;
+  	-p)
+        if [ -f $PROGDIR/$2.vmh ]; then
+            echo " "
+  			echo "testing $2"
+			program_test $2;
+  			rm -f memory.vmh
+  		else
+  			echo "Program test '$2' not found."
+  		fi;;
+
+	-h|--help|*)  echo " ";
+				  echo "Usage : $0 [-c: compile all] [-cd: compile for decode test] [-clean: cleanup build files] [-r: test all] [-rd: run decode ] [-i/-p <test_name>: test specific instruction/program. <test_name> list is shown below.]";
+                  echo "  Instruction Test";
+				  echo "    [add, addi, sub]";
+				  echo "    [beq, bge, bltu, bne]";
+				  echo "    jal";
+				  echo "    jalr";
+				  echo "    lui";
+				  echo "    [or, ori, slli, slti, sltiu, sltu, sra, srai, srli, xor, xori]";
+				 # echo "    pushq";
+				 # echo "    popq";
+				 # echo "    call";
+				 # echo "    ret";
+				 # echo " ";
+		  		 # echo "  Hazard Test";
+				 # echo "    control";
+				 # echo "    [raw, war, waw]";
+				 # echo " ";
+		  		  echo "  Program Test";
+				  echo "    [array_sum_1d, array_sum_ij, array_sum_ji]"
+                  echo "    [hanoi_tower, bubble_sort, fibonacci]";;
+esac
