@@ -9,7 +9,6 @@ import Decode::*;
 import Exec::*;
 import CsrFile::*;
 import Fifo::*;
-import Scoreboard::*;
 import GetPut::*;
 
 typedef struct {
@@ -29,6 +28,11 @@ typedef struct {
   Bool epoch;
 } Decode2Execute deriving(Bits, Eq);
 
+typedef struct {
+  RIndx dst;
+  Data rVal;
+} Forward deriving(Bits, Eq);
+
 (*synthesize*)
 module mkProc(Proc);
   Reg#(Addr)    pc[2]  <- mkCRegU(2);
@@ -37,6 +41,11 @@ module mkProc(Proc);
   IMemory     iMem  <- mkIMemory;
   DMemory     dMem  <- mkDMemory;
   CsrFile     csrf <- mkCsrFile;
+
+  // BypassFifo for forwarding
+  Fifo#(1, Forward) efw <- mkBypassFifo;
+  Fifo#(1, RIndx) ebb <- mkBypassFifo;
+  Fifo#(1, Forward) mfw <- mkBypassFifo;
   
   // The control hazard is handled using two Epoch registers and one BypassFifo.
   Reg#(Bool) fEpoch <- mkRegU;
@@ -48,11 +57,6 @@ module mkProc(Proc);
   Fifo#(1, Decode2Execute) d2e <- mkPipelineFifo;
   Fifo#(1, ExecInst) e2m <- mkPipelineFifo;
   Fifo#(1, ExecInst) m2w <- mkPipelineFifo;
-
-  // Scoreboard instantiation. Use this module to address the data hazard. 
-  // Refer to scoreboard.bsv in the 'common-lib' directory.
-  Scoreboard#(4) sb <- mkPipelineScoreboard;
-
 
 /* Lab 6-1: TODO) - Implement a 5-stage pipelined processor using the provided scoreboard.
                   - Refer to common-lib/scoreboard.bsv and the PowerPoint slides.
@@ -72,54 +76,66 @@ module mkProc(Proc);
     end
 
     f2d.enq(Fetch2Rest{inst:inst, pc:pc[1], ppc:ppc, epoch:fEpoch}); 
+    $display("Fetch    : pc = %d  ", pc[1], fshow(inst));
   endrule
 
   rule doDecode(csrf.started);
+    // Decode
     let inst   = f2d.first.inst;
-    let pc     = f2d.first.pc;
+    let pc   = f2d.first.pc;
     let ppc    = f2d.first.ppc;
     let iEpoch = f2d.first.epoch;
-
-    // Decode 
     let dInst = decode(inst);
-    let stall = sb.search1(dInst.src1) || sb.search2(dInst.src2);
-    if(!stall) begin
+    let csrVal = isValid(dInst.csr) ? csrf.rd(validValue(dInst.csr)) : ?;
+    
+    let rVal1 = isValid(dInst.src1) ? rf.rd1(validValue(dInst.src1)) : ?;
+    let rVal2 = isValid(dInst.src2) ? rf.rd2(validValue(dInst.src2)) : ?;
+    if(mfw.notEmpty) begin
+      if (mfw.first.dst == fromMaybe(0, dInst.src1)) rVal1 = mfw.first.rVal;
+      if (mfw.first.dst == fromMaybe(0, dInst.src2)) rVal2 = mfw.first.rVal;
+    end
+    if(efw.notEmpty) begin
+      if (efw.first.dst == fromMaybe(0, dInst.src1)) rVal1 = efw.first.rVal;
+      if (efw.first.dst == fromMaybe(0, dInst.src2)) rVal2 = efw.first.rVal;
+    end
+    let stall = ebb.notEmpty() ? (ebb.first == fromMaybe(0, dInst.src1)) || (ebb.first == fromMaybe(0, dInst.src2)) : False;
+
+    if (efw.notEmpty()) efw.deq();
+    if (ebb.notEmpty()) ebb.deq();
+    if (mfw.notEmpty()) mfw.deq();
+
+    if (!stall) begin
         f2d.deq;
-        let rVal1 = isValid(dInst.src1) ? rf.rd1(validValue(dInst.src1)) : ?;
-        let rVal2 = isValid(dInst.src2) ? rf.rd2(validValue(dInst.src2)) : ?;
-        let csrVal = isValid(dInst.csr) ? csrf.rd(validValue(dInst.csr)) : ?;
-        d2e.enq(Decode2Execute{
-          dInst: dInst, rVal1: rVal1, rVal2: rVal2, csrVal: csrVal, 
-          pc: pc, ppc: ppc, epoch: iEpoch});
-        if(iEpoch==fEpoch && !execRedirect.notEmpty) sb.insert(dInst.dst);
-        else sb.insert(tagged Invalid);
+        if(iEpoch == fEpoch)
+          d2e.enq(Decode2Execute{ dInst: dInst, rVal1: rVal1, rVal2: rVal2, csrVal: csrVal, pc: pc, ppc: ppc, epoch: iEpoch});
     end
-    else begin
-      if(iEpoch!=fEpoch || execRedirect.notEmpty) f2d.deq;
-    end
-    $display("Decode   : iEpoch = %d fEpoch = %d, stall = %d", iEpoch, fEpoch, stall, fshow(dInst));
+    else (stall) begin if(iEpoch!=fEpoch || execRedirect.notEmpty) f2d.deq; end
+    $display("Decode   : ");
   endrule
 
   rule doExecute(csrf.started);
     let dInst = d2e.first.dInst;
-    let rVal1 = d2e.first.rVal1;
-    let rVal2 = d2e.first.rVal2;
     let csrVal = d2e.first.csrVal;
     let pc_E = d2e.first.pc;
     let ppc = d2e.first.ppc;
     let iEpoch = d2e.first.epoch;
-    
+    let rVal1 = d2e.first.rVal1;
+    let rVal2 = d2e.first.rVal2;
+
     let eInst = exec(dInst, rVal1, rVal2, pc_E, ppc, csrVal);
     d2e.deq;
     if(iEpoch == eEpoch) begin
       // Execute
-      $display("Exec run : iEpoch = %d eEpoch = %d ", iEpoch, eEpoch, fshow(eInst));
+      $display("Exec run : src1=$%d src2=$%d imm=%d dst=$%d  data = %d  ", dInst.src1, dInst.src2, dInst.imm, dInst.dst, eInst.dst, eInst.data);
       if(eInst.mispredict) begin
         eEpoch <= !eEpoch;
         pc[0] <= eInst.addr;
         execRedirect.enq(eInst.addr);
         $display("jump! :mispredicted, address %d ", eInst.addr);
       end
+      
+      if (fromMaybe(0, eInst.dst) != 0) efw.enq(Forward{ dst:fromMaybe(0, eInst.dst), rVal:eInst.data});
+      if ((eInst.iType == Ld) && (fromMaybe(0, eInst.dst) != 0)) ebb.enq(fromMaybe(0, eInst.dst));
     end
     else begin
       $display("Exec skip: iEpoch = %d eEpoch = %d ", iEpoch, eEpoch);
@@ -152,7 +168,8 @@ module mkProc(Proc);
         $finish;
       end
     endcase
-
+    
+    if ((fromMaybe(0, eInst.dst) != 0)) mfw.enq(Forward{ dst:fromMaybe(?, eInst.dst), rVal:eInst.data});
     m2w.enq(eInst);
   endrule
 
@@ -164,7 +181,6 @@ module mkProc(Proc);
       rf.wr(fromMaybe(?, eInst.dst), eInst.data);
     end
     csrf.wr(eInst.iType == Csrw ? eInst.csr : Invalid, eInst.data);
-    sb.remove;
   endrule
 
   method ActionValue#(CpuToHostData) cpuToHost;

@@ -1,0 +1,101 @@
+Warning: file 'memory.vmh' for memory 'mem' has a gap at addresses 17 to 65535.
+Warning: file 'memory.vmh' for memory 'mem' has a gap at addresses 17 to 65535.
+Fetch    : pc =          0  'h00f00813
+
+Cycle          0 ----------------------------------------------------
+Decode   : src1=$32 src2=$15 imm=4294967311 dst=$48  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h0000000f, copVal: tagged Invalid  }
+Fetch    : pc =          4  'h00700613
+
+Cycle          1 ----------------------------------------------------
+Exec run : src1=$32 src2=$15 imm=4294967311 dst=$48  data = 48          15
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h10, csr: tagged Invalid , data: 'h0000000f, addr: 'h00000004, mispredict: False, brTaken: False }
+Decode   : src1=$32 src2=$ 7 imm=4294967303 dst=$44  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0c, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000007, copVal: tagged Invalid  }
+Fetch    : pc =          8  'h00300693
+
+Cycle          2 ----------------------------------------------------
+Exec run : src1=$32 src2=$ 7 imm=4294967303 dst=$44  data = 44           7
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h0c, csr: tagged Invalid , data: 'h00000007, addr: 'h00000008, mispredict: False, brTaken: False }
+Decode   : src1=$32 src2=$ 3 imm=4294967299 dst=$45  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0d, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000003, copVal: tagged Invalid  }
+Fetch    : pc =         12  'h00100713
+
+Cycle          3 ----------------------------------------------------
+Exec run : src1=$32 src2=$ 3 imm=4294967299 dst=$45  data = 45           3
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h0d, csr: tagged Invalid , data: 'h00000003, addr: 'h0000000c, mispredict: False, brTaken: False }
+Decode   : src1=$32 src2=$ 1 imm=4294967297 dst=$46  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0e, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000001, copVal: tagged Invalid  }
+Fetch    : pc =         16  'h00000793
+
+Cycle          4 ----------------------------------------------------
+Exec run : src1=$32 src2=$ 1 imm=4294967297 dst=$46  data = 46           1
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h0e, csr: tagged Invalid , data: 'h00000001, addr: 'h00000010, mispredict: False, brTaken: False }
+Decode   : src1=$32 src2=$ 0 imm=4294967296 dst=$47  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0f, src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+Fetch    : pc =         20  'h00c87833
+
+Cycle          5 ----------------------------------------------------
+Exec run : src1=$32 src2=$ 0 imm=4294967296 dst=$47  data = 47           0
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h0f, csr: tagged Invalid , data: 'h00000000, addr: 'h00000014, mispredict: False, brTaken: False }
+Decode   : src1=$48 src2=$44 imm=  13135872 dst=$48  
+Decode   : rVal1=        15 rVal2=         7  DecodedInst { iType: Alu, aluFunc: And, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h10, src2: tagged Valid 'h0c, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+Fetch    : pc =         24  'h00d87833
+
+Cycle          6 ----------------------------------------------------
+Exec run : src1=$48 src2=$44 imm=  13135872 dst=$48  data = 48           7
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h10, csr: tagged Invalid , data: 'h00000007, addr: 'h00000018, mispredict: False, brTaken: False }
+Decode   : src1=$48 src2=$45 imm=  14184448 dst=$48  
+Decode   : rVal1=         7 rVal2=         3  DecodedInst { iType: Alu, aluFunc: And, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h10, src2: tagged Valid 'h0d, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+Fetch    : pc =         28  'h00e87833
+
+Cycle          7 ----------------------------------------------------
+Exec run : src1=$48 src2=$45 imm=  14184448 dst=$48  data = 48           3
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h10, csr: tagged Invalid , data: 'h00000003, addr: 'h0000001c, mispredict: False, brTaken: False }
+Decode   : src1=$48 src2=$46 imm=  15233024 dst=$48  
+Decode   : rVal1=         3 rVal2=         1  DecodedInst { iType: Alu, aluFunc: And, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h10, src2: tagged Valid 'h0e, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+Fetch    : pc =         32  'h00f87833
+
+Cycle          8 ----------------------------------------------------
+Exec run : src1=$48 src2=$46 imm=  15233024 dst=$48  data = 48           1
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h10, csr: tagged Invalid , data: 'h00000001, addr: 'h00000020, mispredict: False, brTaken: False }
+Decode   : src1=$48 src2=$47 imm=  16281600 dst=$48  
+Decode   : rVal1=         1 rVal2=         0  DecodedInst { iType: Alu, aluFunc: And, brFunc: NT, dst: tagged Valid 'h10, src1: tagged Valid 'h10, src2: tagged Valid 'h0f, csr: tagged Invalid , imm: tagged Invalid , copVal: tagged Invalid  }
+Fetch    : pc =         36  'h00080513
+
+Cycle          9 ----------------------------------------------------
+Exec run : src1=$48 src2=$47 imm=  16281600 dst=$48  data = 48           0
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h10, csr: tagged Invalid , data: 'h00000000, addr: 'h00000024, mispredict: False, brTaken: False }
+Decode   : src1=$48 src2=$ 0 imm=4294967296 dst=$42  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Valid 'h0a, src1: tagged Valid 'h10, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+Fetch    : pc =         40  'h78051073
+
+Cycle         10 ----------------------------------------------------
+Exec run : src1=$48 src2=$ 0 imm=4294967296 dst=$42  data = 42           0
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Valid 'h0a, csr: tagged Invalid , data: 'h00000000, addr: 'h00000028, mispredict: False, brTaken: False }
+Decode   : src1=$42 src2=$ 0 imm=2013597696 dst=$ 0  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Csrw, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h0a, src2: tagged Invalid , csr: tagged Valid 'h780, imm: tagged Invalid , copVal: tagged Invalid  }
+Fetch    : pc =         44  'h00000013
+
+Cycle         11 ----------------------------------------------------
+Exec run : src1=$42 src2=$ 0 imm=2013597696 dst=$ 0  data =  0           0
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Csrw, dst: tagged Invalid , csr: tagged Valid 'h780, data: 'h00000000, addr: 'h0000002c, mispredict: False, brTaken: False }
+Decode   : src1=$32 src2=$ 0 imm=4294967296 dst=$ 0  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+Fetch    : pc =         48  'h00000013
+
+Cycle         12 ----------------------------------------------------
+Exec run : src1=$32 src2=$ 0 imm=4294967296 dst=$ 0  data =  0           0
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Invalid , csr: tagged Invalid , data: 'h00000000, addr: 'h00000030, mispredict: False, brTaken: False }
+Decode   : src1=$32 src2=$ 0 imm=4294967296 dst=$ 0  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+Fetch    : pc =         52  'h00000013
+
+Cycle         13 ----------------------------------------------------
+Exec run : src1=$32 src2=$ 0 imm=4294967296 dst=$ 0  data =  0           0
+Exec run : iEpoch = 0 eEpoch = 0 ExecInst { iType: Alu, dst: tagged Invalid , csr: tagged Invalid , data: 'h00000000, addr: 'h00000034, mispredict: False, brTaken: False }
+Decode   : src1=$32 src2=$ 0 imm=4294967296 dst=$ 0  
+Decode   : rVal1=         0 rVal2=         0  DecodedInst { iType: Alu, aluFunc: Add, brFunc: NT, dst: tagged Invalid , src1: tagged Valid 'h00, src2: tagged Invalid , csr: tagged Invalid , imm: tagged Valid 'h00000000, copVal: tagged Invalid  }
+Fetch    : pc =         56  'h00000013
+
+Cycle         14 ----------------------------------------------------
